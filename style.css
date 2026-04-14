@@ -5,6 +5,14 @@
   padding: 0;
 }
 
+:root {
+  --loreal-red: #ff003b;
+  --loreal-gold: #e3a535;
+  --ink: #111111;
+  --surface: #ffffff;
+  --muted-border: #d9d9d9;
+}
+
 /* —— body + fonts —— */
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
@@ -46,22 +54,37 @@ body {
   width: 100%;
   padding: 16px;
   font-size: 18px;
-  border: 2px solid #000;
+  border: 2px solid var(--ink);
   border-radius: 8px;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--surface);
+  font-weight: 500;
+}
+
+.search-section input {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background-color: var(--surface);
   font-weight: 500;
 }
 
 .search-section select:focus {
   outline: none;
-  border-color: #666;
+  border-color: var(--loreal-red);
+}
+
+.search-section input:focus {
+  outline: none;
+  border-color: var(--loreal-red);
 }
 
 /* chat section */
 .chatbox {
   margin: 40px 0;
-  border: 2px solid #000;
+  border: 2px solid var(--ink);
   border-radius: 8px;
   padding: 26px;
 }
@@ -79,6 +102,57 @@ body {
   overflow-y: auto;
   background: #fafafa;
   margin-bottom: 20px;
+}
+
+.routine-response {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.routine-section-title {
+  font-size: 18px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+}
+
+.routine-line {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.chat-message {
+  max-width: 85%;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.chat-message-user {
+  margin-left: auto;
+  background: #000;
+  color: #fff;
+}
+
+.chat-message-assistant {
+  margin-right: auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #222;
+}
+
+.chat-message-label {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  opacity: 0.85;
+}
+
+.chat-message-content {
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 /* placeholder message */
@@ -113,7 +187,7 @@ body {
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: var(--loreal-red);
   color: #fff;
   border: none;
   padding: 12px;
@@ -123,15 +197,22 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(255, 0, 59, 0.24);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: var(--loreal-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(227, 165, 53, 0.28);
 }
 
 .chat-form button:focus {
-  outline: 2px solid #000;
+  outline: 2px solid var(--loreal-red);
   outline-offset: 2px;
 }
 
@@ -162,12 +243,12 @@ body {
 
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: var(--ink);
   text-decoration: none;
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: var(--loreal-red);
 }
 
 /* products grid */
@@ -180,12 +261,32 @@ body {
 
 .product-card {
   flex: 0 1 calc(33.333% - 14px);
-  border: 1px solid #ccc;
+  border: 1px solid var(--muted-border);
   padding: 15px;
-  border-radius: 4px;
+  border-radius: 10px;
   display: flex;
   gap: 15px;
   min-height: 160px;
+  cursor: pointer;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--loreal-gold);
+  box-shadow: 0 10px 22px rgba(227, 165, 53, 0.22);
+}
+
+.product-card.selected {
+  border-color: var(--loreal-red);
+  background-color: #fff6f8;
+  box-shadow: 0 12px 24px rgba(255, 0, 59, 0.18);
 }
 
 .product-card img {
@@ -217,7 +318,7 @@ body {
 .selected-products {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #000;
+  border: 2px solid var(--ink);
   border-radius: 8px;
 }
 
@@ -232,6 +333,63 @@ body {
   gap: 10px;
 }
 
+.selected-product-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--muted-border);
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.selected-product-item span {
+  font-size: 14px;
+}
+
+.remove-selected-btn {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 10px;
+  background: var(--loreal-red);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.remove-selected-btn:hover {
+  background: var(--loreal-gold);
+  transform: translateY(-1px);
+}
+
+.clear-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--muted-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.clear-btn:hover {
+  border-color: var(--loreal-gold);
+  color: var(--loreal-gold);
+  transform: translateY(-1px);
+}
+
 .generate-btn {
   width: 100%;
   margin-top: 20px;
@@ -239,15 +397,21 @@ body {
   font-size: 18px;
   font-weight: 500;
   color: #fff;
-  background: #000;
+  background: linear-gradient(90deg, var(--loreal-red), #ff365f);
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background 0.3s;
+  box-shadow: 0 12px 26px rgba(255, 0, 59, 0.24);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
 .generate-btn:hover {
-  background: #666;
+  background: linear-gradient(90deg, var(--loreal-gold), #f0bb58);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(227, 165, 53, 0.28);
 }
 
 .generate-btn i {
