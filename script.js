@@ -11,6 +11,8 @@ const userInput = document.getElementById("userInput");
 
 const SELECTED_PRODUCTS_STORAGE_KEY = "selectedProducts";
 
+const API_URL = "https://cloudfare-worker.bamideled141.workers.dev";
+
 /* Keep all products in memory after first fetch */
 let allProducts = [];
 
